@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Authorization Complete — VIRALSIG</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+.wrap{max-width:640px;margin:80px auto;padding:0 20px;text-align:center}
+.codebox{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+padding:16px;margin:22px 0;word-break:break-all;font-family:ui-monospace,Consolas,monospace;
+font-size:14px;color:var(--accent-2)}
+.muted{color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="/"><img src="/assets/logo.png" alt="VIRALSIG logo"><span>VIRALSIG</span></a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1>Authorization complete</h1>
+  <p class="muted" id="msg">Your TikTok account has been connected to VIRALSIG. You can close this window.</p>
+  <div class="codebox" id="code" style="display:none"></div>
+  <p class="muted" id="hint" style="display:none">Authorization code (for the VIRALSIG operator): copy the value above.</p>
+  <p><a class="btn" href="/">Back to VIRALSIG</a></p>
+</div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get("code");
+  var err = params.get("error") || params.get("error_description");
+  if (err) {
+    document.getElementById("msg").textContent = "Authorization was not completed: " + err;
+  } else if (code) {
+    var box = document.getElementById("code");
+    box.textContent = code;
+    box.style.display = "block";
+    document.getElementById("hint").style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>
