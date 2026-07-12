@@ -36,6 +36,15 @@ font-size:14px;color:var(--accent-2)}
   var params = new URLSearchParams(window.location.search);
   var code = params.get("code");
   var err = params.get("error") || params.get("error_description");
+  var state = params.get("state") || "";
+  // Operator flow: a state minted with the "local." prefix means the VIRALSIG
+  // desktop tool on this machine started the OAuth — hand the code straight to
+  // it. This runs in the operator's own browser, so localhost is reachable.
+  if (code && state.indexOf("local.") === 0) {
+    document.getElementById("msg").textContent = "Finishing connection…";
+    window.location.replace("http://localhost:8000/callback/" + window.location.search);
+    return;
+  }
   if (err) {
     document.getElementById("msg").textContent = "Authorization was not completed: " + err;
   } else if (code) {
